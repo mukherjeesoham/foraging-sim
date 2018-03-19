@@ -1,4 +1,4 @@
-# ScalarWave
+# Foraging Sim
 
 A simple Python program to simulate foraging behavior in butterflies. See [(1)](https://www.sciencedirect.com/science/article/pii/S1433831904700232?via%3Dihub) for context and further details. 
 
