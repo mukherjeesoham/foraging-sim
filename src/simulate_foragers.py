@@ -3,7 +3,7 @@
 # Soham M, 1/2015
 #==============================================================================
 
-import numpy as np 
+import numpy as np
 from numpy import linalg as LA
 import matplotlib.pyplot as plt
 import matplotlib
@@ -30,7 +30,7 @@ matplotlib.rcParams.update({
 
 #TEST CASE
 """
-SP    = 5 
+SP    = 5
 NF    = 3
 MAXIT = 6
 REP   = 50
@@ -46,8 +46,8 @@ REP   = 10 		#After how many time steps do the flowers that were
 
 GENERATE_PATH_EVOLUTION = 0
 
-PATCH    = np.random.randint(2, size=(SP, SP)) 
-FORAGERS = np.zeros((NF, 3))	
+PATCH    = np.random.randint(2, size=(SP, SP))
+FORAGERS = np.zeros((NF, 3))
 
 for BF in FORAGERS:
 	BF[1:] = np.random.randint(SP, size=2)
@@ -60,9 +60,9 @@ FORAGERS = np.dstack((np.zeros(np.shape(FORAGERS)), FORAGERS))
 #------------------------------------------------------------------------------
 
 def UPDATE(FORAGERS, PATCH, IT):
-	
+
 	POS0 = FORAGERS[:, 1:, -1]
-	
+
 
 	if IT%REP == 0:
 		POSM3 = FORAGERS[:, 1:, -REP]
@@ -72,16 +72,16 @@ def UPDATE(FORAGERS, PATCH, IT):
 	POS1 = np.random.randint(SP, size=(np.shape(FORAGERS)[0], 2))
 
 	NFORAGERS = np.zeros((np.shape(FORAGERS)[0], 3))
-	
+
 	for _BTFY in range(np.shape(FORAGERS)[0]):
 		DT = LA.norm(POS0[_BTFY] - POS1[_BTFY])*(0.1/SP**2.0)
 		PE = PATCH[POS1[_BTFY, 0], POS1[_BTFY, 1]]
-		
+
 		if PE == 1.0:
 			PC = 0.1
 		else:
 			PC = 0.0
-		
+
 		TC = PE - DT - PC
 
 		NFORAGERS[_BTFY][0]  = FORAGERS[_BTFY][0][-1] + TC
@@ -131,11 +131,11 @@ def EVOLVE(FORAGERS, PATCH, ITMAX):
 	print 40*"-"
 	print "Size of PATCH = ", SP
 	print 40*"-"
-	
+
 	PATCH_DENSITY = []
 	NUM_FORAGERS  = []
 	ITERATION     = []
-	
+
 	# NUM_FORAGERS.append(FORAGERS.shape[0])
 	# PATCH_DENSITY.append(ANALYZE_PATCH(PATCH))
 	# ITERATION.append(0)
@@ -157,14 +157,14 @@ def EVOLVE(FORAGERS, PATCH, ITMAX):
 			EXCAN = ANALYZE_FORAGERS(FORAGERS)
 			if np.size(EXCAN) > 0:
 				FORAGERS = np.delete(FORAGERS, EXCAN, axis=0)
-				
+
 				PATCH_DENSITY.append(ANALYZE_PATCH(PATCH))
 				NUM_FORAGERS.append(FORAGERS.shape[0])
 				ITERATION.append(_iter)
-				
+
 				if FORAGERS.shape[0] == 0:
 					print 75*"="
-					print "Exiting simulation. All foragers have left."		
+					print "Exiting simulation. All foragers have left."
 					print 75*"="
 					return np.array(NUM_FORAGERS),  np.array(PATCH_DENSITY), np.array(ITERATION)
 	return FORAGERS
